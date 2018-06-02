@@ -1,20 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-import freenect
+#import freenect
 import cv2
-import frame_convert2
+#import frame_convert2
 import datetime
 import numpy as np
 
 
 
 def get_depth():
-	return frame_convert2.pretty_depth_cv(freenect.sync_get_depth()[0])
+	global camera
+	#return frame_convert2.pretty_depth_cv(freenect.sync_get_depth()[0])
+	retval, im = camera.read()
+	return im
 
 
 def get_video():
-	return frame_convert2.video_cv(freenect.sync_get_video()[0])
+	#return frame_convert2.video_cv(freenect.sync_get_video()[0])
+	retval, im = camera.read()
+	return im
 
 def nothing(x):
 	pass
@@ -115,18 +120,25 @@ def calculateFeatures(img, cnt):
 
 # trening modelu klasyfikatora
 def train(features, labels):
-	# dla klasyfikatora NN nie wymaga nic ponad podane dane
 	# liczymy srodek ciezkosci dla modelu 
-	print features
-	print model["features"]
-	s1 = 0
-	s2 = 0
-	s3 = 0
 
-	features  = [s1/i,s2/i,s3/i]
+
+	f0 = 0
+	f1 = 0
+	f2 = features[0][2]
+	i=0; 
+
+	for f in features:
+		f0 = f0+f[0]
+		f1 = f1+f[1]
+		f2 = f2+f[2]
+		i=i+1
+
+	ret = [f0/i,f1/i,f2/i]
+	print features, ret 
 	
 	
-	return {"features": features, "labels": labels}
+	return {"features": ret, "labels": labels}
 
 # rozpoznawanie z użyciem wygenerowanego modelu
 def classify(model, feature):
@@ -149,6 +161,8 @@ def classify(model, feature):
 
 
 def main():
+	global camera
+	camera = cv2.VideoCapture(0)
 	setupMask()
 	setupContours()
 
@@ -178,7 +192,7 @@ def main():
 
 		if do_classify:
 			lbl, dist = classify(model, f)
-			print(str(f) + " : " + label_names[lbl] + "(dist = " + str(dist) + ")")
+			#print(str(f) + " : " + label_names[lbl] + "(dist = " + str(dist) + ")")
 
 
 		# wyświetlenie obrazu wejściowego
