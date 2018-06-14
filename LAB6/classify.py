@@ -115,17 +115,8 @@ def calculateFeatures(img, cnt):
 
 # trening modelu klasyfikatora
 def train(features, labels):
-	# dla klasyfikatora NN nie wymaga nic ponad podane dane
-	# liczymy srodek ciezkosci dla modelu 
-	print features
-	print model["features"]
-	s1 = 0
-	s2 = 0
-	s3 = 0
+	# dla klasyfikatora NN nie wymaga nic ponad podane danw
 
-	features  = [s1/i,s2/i,s3/i]
-	
-	
 	return {"features": features, "labels": labels}
 
 # rozpoznawanie z użyciem wygenerowanego modelu
