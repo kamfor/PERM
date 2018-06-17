@@ -120,7 +120,6 @@ def calculateFeatures(img, cnt):
 
 # trening modelu klasyfikatora
 def train(features, labels):
-<<<<<<< HEAD
 	# dla klasyfikatora NN nie wymaga nic ponad podane danw
 
 	return {"features": features, "labels": labels}
@@ -144,7 +143,6 @@ def train(features, labels):
 	
 	
 	return {"features": ret, "labels": labels}
->>>>>>> 838c629fd991a5dcbff9fa950d37a6eba945cee4
 
 # rozpoznawanie z użyciem wygenerowanego modelu
 def classify(model, feature):
